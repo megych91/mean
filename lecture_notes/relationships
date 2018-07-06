@@ -1,0 +1,29 @@
+// ONE TO MANY RELATIONSHIP (ONE USER CAN HAVE MANY POSTS)
+let UserSchema = new mongoose.Schema({
+    name: { type: String, require: true },
+    posts: [type: ObjectID, ref: PostSchema] 
+    // every user that exists has an array of posts, this stores an array of post ids'
+}, { timestamps: true })
+
+let PostSchema = new mongoose.Schema({
+    title: {type: String, requre: true},
+    desc: {type: String, requre: true},
+    user: {type: ObjectID, ref:"User"} 
+    // we are looking for thios ObjectID in User Schema
+})
+
+
+
+// MANY TO MANY RELATIONSHIP
+let UserSchema = new mongoose.Schema({
+    name: { type: String, require: true },
+    posts: [type: ObjectID, ref: PostSchema] 
+    // every user that exists has an array of posts, this stores an array of post ids'
+}, { timestamps: true })
+
+let PostSchema = new mongoose.Schema({
+    title: {type: String, requre: true},
+    desc: {type: String, requre: true},
+    user: [{type: ObjectID, ref:"User"}]
+    // we are looking for thios ObjectID in User Schema
+})

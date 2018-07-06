@@ -1,0 +1,58 @@
+let mongoose = require('mongoose);
+var UserSchema = new mongoose.Schema({
+    first_name: {
+        type: String,
+        required: true,
+        minlength: 8,
+        maxlength: 128
+    },
+    last_name: {
+        type: String,
+        required: true,
+        minlength: 8,
+        maxlength: 128
+    },
+    age: {
+        type: Number,
+        min: 1,
+        max: 150
+    },
+    email: {
+        type: String,
+        required: true,
+        minlength: 8,
+        maxlength: 128
+    }
+},
+    { timestamps: true });
+
+//
+
+let User = mongoose.model("User");
+app.post("/register", function (req, res) {
+    user.findOne({
+        email: req.body.email, function(err, user) {
+            if (user) {
+                req.flash("MESSAGE")
+                return res.redirect("/")
+            }
+            else {
+                let user = new User(req.body);
+                user.password = bcrypt.encode(user.password)
+                // encode the password you have and return to us the hashed password
+                user.save(err => {
+                    if (err) {
+                        for (let err in errs){
+                            req.flast(err);
+                        }
+                return res.redirect ("/")
+                    }
+                }
+}
+    }})
+})
+
+// FLASH MESSAGES
+// in order to have flash, you must install sessions
+npm install express - flash
+let flash = require('flash')

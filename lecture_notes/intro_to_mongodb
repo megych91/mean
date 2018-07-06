@@ -1,0 +1,70 @@
+1. Create a database called 'my_first_db'.
+>> db.createCollection("students")
+
+2. Create students collection.
+>> db.createCollection("students")
+
+3. Each document you insert into this collection should have the following format: ({name: STRING, 
+home_state: STRING, lucky_number: NUMBER, birthday: {month: NUMBER, day: NUMBER, year: NUMBER}})
+>> db.students.insert({name: "Diamond", home_state: "CA", lucky_number: 9, birthday: {month: 8, day: 8, year: 2014}})
+
+4. Create 5 students with the appropriate info.
+
+5. Get all students.
+>> db.students.find({})
+
+6. Retrieve all students who are from MD or CA.
+>> db.students.find({$or:[{home_state: "CA"}, {home_state: "MD"}]});
+
+7. Get all students whose lucky number is:
+
+    7a. greater than 3
+    >> db.students.find( { lucky_number: { $gt: 3 } } );
+
+    7b. less than or equal to 10
+    >> db.students.find( { lucky_number: { $lte: 10 } } );
+
+    7c. between 1 and 9 (inclusive)
+    >> db.students.find( { lucky_number: { $gt: 1, $lt: 9 } } );
+
+8. Add a field to each student collection called 'interests' that is an ARRAY.  
+It should contain the following entries: 'coding', 'brunch', 'MongoDB'. 
+Do this in ONE operation.
+>> db.students.update({}, {$set : {"interests":["coding", "brunch", "MongoDB"]}}, {upsert:false, multi:true})
+
+9. Add some unique interests for each particular student into each of their interest arrays.
+>> db.students.update({name: "Debbie"}, {$set: {interests: ["working", "yelling at bf", "gym"]}})
+
+10. Add the interest 'taxes' into someone's interest array.
+>> db.students.update({name: "Debbie"}, {$set: {interests: ["working", "yelling at bf", "gym", "taxes"]}})
+
+
+11. Remove the 'taxes' interest you just added.
+>> db.students.update({name: "DEBBIE"}, {$pop: {interests: 1}})
+
+12. Remove all students who are from California (or Washington).
+>> 
+
+13. Remove a student by name. 
+>> db.students.remove({name: "DEBBIE"})
+
+14. Remove a student whose lucky number is greater than 5 (JUST ONE)
+>> 
+
+15. Add a field to each student collection called 'number_of_belts' and set it to 0.
+>> db.students.update({}, {$set : {number_of_belts: 0}}, {upsert:false, multi:true})
+
+16. Increment this field by 1 for all students in Washington (Seattle Dojo).
+>> 
+
+17. Rename the 'number_of_belts' field to 'belts_earned'
+>> db.students.updateMany( {}, { $rename: {number_of_belts : "belts_earned"}} )
+
+18. Remove the 'lucky_number' field.
+>> db.students.updateMany( {}, { $unset: {lucky_number : ""}} )
+
+19. Add a 'updated_on' field, and set the value as the current date.
+>> 
+
+
+db.collection.updateMany({},{ "$currentDate": { "updated_on": { "$type": date }}})

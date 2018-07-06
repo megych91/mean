@@ -1,0 +1,61 @@
+1. What is mongoose and what is it's purpose?
+>>  Acts as a layer between our applications. 
+
+2. How do you connect to MongoDB from Mongoose?
+>>  npm install mongoose --save // INSTALL
+>>  let mongoose = require('mongoose'); // REQUIRE
+>>  mongoose.connect('mongodb://localhost/basic_mongoose'); // CONNECT
+
+3. How do you create and store a schema via Mongoose?
+>>  var User = new mongoose.Schema({
+        name: String,
+        age: Number
+    })
+    // CREATES A SCHEMA
+>>  mongoose.model('User', User) // SETTING THE SCHEMA
+>>  var User = mongoose.model('User') // RETREIVING THE SCHEMA 
+
+4. Find all users via mongoose.
+>>  User.find({}, function (err, users){
+    response.render("index", {users});
+});
+
+5. Find one user via mongoose.
+>>  find(req,res){
+        User.findOne({_id:req.params.id}, (err, users)=>{
+        response.render("index", {users});
+        })
+    }
+
+6. Create a user via mongoose.
+>>  register(req, res){
+    let user = new User(req.body); // CREATE AN INSTANCE OR ENTRY INTO THE SCHEMA
+    user.save(err=>{
+        if(err){
+            return res.render("index", {"errors":user.errors}) // IF THERE ARE ANY ISSUES, THE PAGE WILL RENDER AND SHOW YOU THE ERRORS
+        }
+        else{
+            return res.redirect("/home")
+        }
+    })
+}
+
+7. Update a user by id via mongoose.
+>>  User.update({_id:req.params.id}, {$push: {pets: {name: 'Skippy', type: 'cactus' }}}, function(err){
+        if(err){
+            return res.render("index", {"errors":user.errors})
+        }
+        else{
+            return res.redirect("/home")
+        }
+    })
+
+8. Delete a user by id via mongoose.
+>>  User.remove({_id:req.params.id}, function(err){
+        if(err){
+            return res.render("index", {"errors":user.errors})
+        }
+        else{
+            return res.redirect("/home")
+        }
+   })

@@ -1,0 +1,14 @@
+// SETTING UP A CONTROLLER
+let User = mongoose.model(User);
+
+app.post("/post", (res, req)=>{
+    let post = new Post(req.body)
+    post.user = req.session.user;
+    User.findOne({_id: req.session.user},(err, user)=>{
+        post.save(err=>{
+            user.posts.push(post.id);
+            user.save(err=>{
+            })
+        })
+    })
+})
